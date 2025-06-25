@@ -1,0 +1,53 @@
+# Map Coloring CSP using Backtracking
+
+# Define the map of regions and their neighbors
+neighbors = {
+    'A': ['B', 'C'],
+    'B': ['A', 'C', 'D'],
+    'C': ['A', 'B', 'D', 'E'],
+    'D': ['B', 'C', 'E'],
+    'E': ['C', 'D']
+}
+
+# Define available colors
+colors = ['Red', 'Green', 'Blue']
+
+def is_valid(region, color, assignment):
+    """Check if assigning the color to the region violates constraints"""
+    for neighbor in neighbors.get(region, []):
+        if assignment.get(neighbor) == color:
+            return False
+    return True
+
+def backtrack(assignment):
+    """Recursive backtracking function"""
+    # If assignment is complete
+    if len(assignment) == len(neighbors):
+        return assignment
+    
+    # Choose an unassigned region
+    unassigned = [r for r in neighbors if r not in assignment][0]
+    
+    for color in colors:
+        if is_valid(unassigned, color, assignment):
+            assignment[unassigned] = color
+            result = backtrack(assignment)
+            if result:
+                return result
+            # Backtrack
+            del assignment[unassigned]
+    
+    return None
+
+def main():
+    print("Map Coloring using CSP (Backtracking)")
+    solution = backtrack({})
+    if solution:
+        print("Solution found:")
+        for region in sorted(solution.keys()):
+            print(f"Region {region}: {solution[region]}")
+    else:
+        print("No solution found.")
+
+if __name__ == '__main__':
+    main()
