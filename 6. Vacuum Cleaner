@@ -1,0 +1,30 @@
+def vacuum_cleaner(state):
+    location = state[0]
+    status = state[1:]
+
+    print(f"Initial State: Location={location}, A={status[0]}, B={status[1]}")
+    
+    if location == 'A':
+        if status[0] == 'Dirty':
+            print("Cleaning A")
+            status[0] = 'Clean'
+        print("Move to B")
+        if status[1] == 'Dirty':
+            print("Cleaning B")
+            status[1] = 'Clean'
+    else:  # location == 'B'
+        if status[1] == 'Dirty':
+            print("Cleaning B")
+            status[1] = 'Clean'
+        print("Move to A")
+        if status[0] == 'Dirty':
+            print("Cleaning A")
+            status[0] = 'Clean'
+
+    print(f"Final State: A={status[0]}, B={status[1]}")
+
+# Example input
+# state = [current_location, A_status, B_status]
+state = ['A', 'Dirty', 'Dirty']
+
+vacuum_cleaner(state)
