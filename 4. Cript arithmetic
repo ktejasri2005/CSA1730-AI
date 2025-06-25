@@ -1,0 +1,27 @@
+from itertools import permutations
+
+def solve_cryptarithmetic():
+    letters = 'HEYLOAI'
+    # 7 unique letters, digits 0-9 -> pick 7 digits without repeat
+    for perm in permutations(range(10), len(letters)):
+        mapping = dict(zip(letters, perm))
+        
+        # No leading zero allowed
+        if mapping['H'] == 0 or mapping['H'] == 0:
+            continue
+        
+        hey = mapping['H'] * 100 + mapping['E'] * 10 + mapping['Y']
+        hello = (mapping['H'] * 10000 + mapping['E'] * 1000 +
+                 mapping['L'] * 100 + mapping['L'] * 10 + mapping['O'])
+        haiii = (mapping['H'] * 10000 + mapping['A'] * 1000 +
+                 mapping['I'] * 100 + mapping['I'] * 10 + mapping['I'])
+        
+        if hey + hello == haiii:
+            print(f"SOLUTION FOUND:")
+            print(f"HEY={hey}, HELLO={hello}, HAIII={haiii}")
+            print(f"Mapping: {mapping}")
+            return
+    print("No solution found.")
+
+solve_cryptarithmetic()
+
